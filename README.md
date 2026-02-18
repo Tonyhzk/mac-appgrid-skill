@@ -4,7 +4,7 @@
 
 A Claude Code skill for managing AppGrid database on macOS.
 
-[English](README.md) | **中文** | [更新日志](CHANGELOG_CN.md)
+**English** | [中文](README_CN.md) | [Changelog](CHANGELOG.md)
 
 ---
 
