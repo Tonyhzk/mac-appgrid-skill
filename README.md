@@ -1,5 +1,7 @@
 # mac-appgrid-skill
 
+![mac-appgrid-skill banner](./assets/banner_en.svg)
+
 A Claude Code skill for managing AppGrid database on macOS.
 
 [English](README.md) | **中文** | [更新日志](CHANGELOG_CN.md)
@@ -7,6 +9,8 @@ A Claude Code skill for managing AppGrid database on macOS.
 ---
 
 ## Features
+
+![Key Features](./assets/features_en.svg)
 
 ### Core Functions
 - **List Structure** - Display tree view of pages, groups, and apps

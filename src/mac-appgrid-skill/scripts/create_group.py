@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from core import (
     connect, insert_item, shift_ordering, get_next_ordering,
-    TYPE_GROUP, TYPE_CONTAINER,
+    check_capacity, TYPE_GROUP, TYPE_CONTAINER,
 )
 
 
@@ -29,6 +29,13 @@ def main():
         sys.exit(1)
 
     pos = args.position if args.position is not None else get_next_ordering(conn, args.page)
+
+    # 检查页面容量
+    try:
+        check_capacity(conn, args.page)
+    except ValueError as e:
+        print(f"错误: {e}", file=sys.stderr)
+        sys.exit(1)
 
     # 如果指定位置，先腾出空间
     if args.position is not None:

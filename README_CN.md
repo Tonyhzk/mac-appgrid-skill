@@ -1,5 +1,7 @@
 # mac-appgrid-skill
 
+![mac-appgrid-skill banner](./assets/banner_cn.svg)
+
 用于管理 macOS AppGrid 网格布局数据库的 Claude Code 技能。
 
 [English](README.md) | **中文** | [更新日志](CHANGELOG_CN.md)
@@ -7,6 +9,8 @@
 ---
 
 ## 功能特性
+
+![核心功能](./assets/features_cn.svg)
 
 ### 核心功能
 - **列出结构** - 显示页面、分组、应用的树形结构

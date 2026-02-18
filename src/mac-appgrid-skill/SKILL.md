@@ -1,6 +1,6 @@
 ---
 name: program-appgrid
-version: 1.0.0
+version: 1.0.1
 description: macOS AppGrid 网格布局管理。当用户需要查看、编辑、整理 AppGrid 应用布局、管理分组、移动应用、导出应用列表时使用。关键词：AppGrid、应用网格、分组管理、应用布局、agrid。
 ---
 
@@ -110,3 +110,11 @@ python3 %当前SKILL文件父目录%/scripts/check_integrity.py --db <path>
 - 修改数据库前建议备份 `.agrid` 文件
 - 分组的 `--to` 参数：传入分组 ID 时自动定位到其内部容器
 - `--position` 省略时追加到末尾
+
+## 容量限制
+
+AppGrid 单个容器（页面或分组）最多容纳 **35 个子项**（7列 × 5行）。超出上限的项目会在导入后被 AppGrid 自动移出。
+
+- 页面的 35 个子项包括分组和散落应用
+- 分组内的 35 个子项全部为应用
+- 当分组应用数接近上限时，应拆分为多个分组（如"系统工具1"、"系统工具2"）

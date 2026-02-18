@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from core import (
     connect, shift_ordering, get_next_ordering, reorder_children,
-    TYPE_GROUP, TYPE_CONTAINER,
+    check_capacity, TYPE_GROUP, TYPE_CONTAINER,
 )
 
 
@@ -38,6 +38,15 @@ def main():
         sys.exit(1)
 
     old_parent = group["parent_id"]
+
+    # 检查目标页面容量（同页面内移动不需要检查）
+    if args.to_page != old_parent:
+        try:
+            check_capacity(conn, args.to_page)
+        except ValueError as e:
+            print(f"错误: {e}", file=sys.stderr)
+            sys.exit(1)
+
     pos = args.position if args.position is not None else get_next_ordering(conn, args.to_page)
 
     if args.position is not None:

@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from core import (
     connect, resolve_target, shift_ordering, get_next_ordering,
-    reorder_children, TYPE_APP,
+    reorder_children, check_capacity, TYPE_APP,
 )
 
 
@@ -31,6 +31,15 @@ def main():
 
     old_parent = app["parent_id"]
     target_id = resolve_target(conn, args.to)
+
+    # 检查目标容器容量（同容器内移动不需要检查）
+    if target_id != old_parent:
+        try:
+            check_capacity(conn, target_id)
+        except ValueError as e:
+            print(f"错误: {e}", file=sys.stderr)
+            sys.exit(1)
+
     pos = args.position if args.position is not None else get_next_ordering(conn, target_id)
 
     # 如果指定位置，先腾出空间

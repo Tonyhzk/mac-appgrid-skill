@@ -9,6 +9,9 @@ TYPE_CONTAINER = 3  # 容器/页面
 TYPE_GROUP = 2      # 分组
 TYPE_APP = 4        # 应用
 
+# 容量限制：AppGrid 单个容器（页面或分组）最多容纳的子项数（7列 × 5行）
+MAX_ITEMS_PER_CONTAINER = 35
+
 
 def connect(db_path: str) -> sqlite3.Connection:
     """连接数据库，返回 Connection"""
@@ -106,3 +109,20 @@ def resolve_target(conn: sqlite3.Connection, target_id: int) -> int:
             raise ValueError(f"分组 {target_id} 缺少内部容器")
         return container
     return target_id
+
+
+def count_children(conn: sqlite3.Connection, parent_id: int) -> int:
+    """统计指定父节点下的子项数量"""
+    row = conn.execute(
+        "SELECT COUNT(*) AS cnt FROM items WHERE parent_id=?", (parent_id,)
+    ).fetchone()
+    return row["cnt"]
+
+
+def check_capacity(conn: sqlite3.Connection, parent_id: int, adding: int = 1):
+    """检查容器是否有足够空间，超限则抛出 ValueError"""
+    current = count_children(conn, parent_id)
+    if current + adding > MAX_ITEMS_PER_CONTAINER:
+        raise ValueError(
+            f"容器 {parent_id} 已有 {current} 个子项，添加 {adding} 个后将超出上限 {MAX_ITEMS_PER_CONTAINER}"
+        )

@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
+  <defs>
+    <linearGradient id="card1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="card2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f093fb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f5576c;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="card3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="card4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#43e97b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#38f9d7;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="card5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fa709a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fee140;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="card6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a8edea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fed6e3;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="600" fill="#0f1a2e" rx="12"/>
+
+  <!-- 标题 -->
+  <text x="600" y="50" font-family="'SF Pro Display', -apple-system, sans-serif" font-size="28" font-weight="600" fill="#e6edf3" text-anchor="middle">
+    核心功能
+  </text>
+
+  <!-- 功能卡片 1: 数据库管理 -->
+  <g transform="translate(30, 80)" filter="url(#shadow)">
+    <rect width="360" height="220" rx="16" fill="url(#card1)"/>
+    <!-- 图标 -->
+    <g transform="translate(30, 30)">
+      <rect x="0" y="0" width="60" height="60" rx="12" fill="rgba(255,255,255,0.25)"/>
+      <path d="M18 45 L18 15 L42 15 L42 45 Z M24 25 L36 25 M24 32 L36 32 M24 39 L32 39" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none"/>
+    </g>
+    <!-- 标题和描述 -->
+    <text x="105" y="55" font-family="'SF Pro Display', sans-serif" font-size="22" font-weight="600" fill="#ffffff">数据库管理</text>
+    <text x="30" y="100" font-family="'SF Pro Text', sans-serif" font-size="15" fill="rgba(255,255,255,0.9)">
+      <tspan x="30" dy="0">• 直接操作 .agrid SQLite 数据库</tspan>
+      <tspan x="30" dy="24">• 完整 CRUD 操作支持</tspan>
+      <tspan x="30" dy="24">• 修改前自动备份保护</tspan>
+    </text>
+  </g>
+
+  <!-- 功能卡片 2: 分组操作 -->
+  <g transform="translate(420, 80)" filter="url(#shadow)">
+    <rect width="360" height="220" rx="16" fill="url(#card2)"/>
+    <g transform="translate(30, 30)">
+      <rect x="0" y="0" width="60" height="60" rx="12" fill="rgba(255,255,255,0.25)"/>
+      <rect x="15" y="18" width="20" height="20" rx="4" fill="#fff"/>
+      <rect x="25" y="28" width="20" height="20" rx="4" fill="#fff"/>
+      <rect x="35" y="38" width="20" height="20" rx="4" fill="#fff"/>
+    </g>
+    <text x="105" y="55" font-family="'SF Pro Display', sans-serif" font-size="22" font-weight="600" fill="#ffffff">分组操作</text>
+    <text x="30" y="100" font-family="'SF Pro Text', sans-serif" font-size="15" fill="rgba(255,255,255,0.9)">
+      <tspan x="30" dy="0">• 创建/删除/重命名分组</tspan>
+      <tspan x="30" dy="24">• 智能迁移组内应用</tspan>
+      <tspan x="30" dy="24">• 跨页面移动分组</tspan>
+    </text>
+  </g>
+
+  <!-- 功能卡片 3: 应用管理 -->
+  <g transform="translate(810, 80)" filter="url(#shadow)">
+    <rect width="360" height="220" rx="16" fill="url(#card3)"/>
+    <g transform="translate(30, 30)">
+      <rect x="0" y="0" width="60" height="60" rx="12" fill="rgba(255,255,255,0.25)"/>
+      <rect x="12" y="15" width="18" height="18" rx="4" fill="#fff"/>
+      <rect x="30" y="30" width="18" height="18" rx="4" fill="#fff"/>
+      <path d="M23 24 L37 38" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <text x="105" y="55" font-family="'SF Pro Display', sans-serif" font-size="22" font-weight="600" fill="#ffffff">应用管理</text>
+    <text x="30" y="100" font-family="'SF Pro Text', sans-serif" font-size="15" fill="rgba(255,255,255,0.9)">
+      <tspan x="30" dy="0">• 灵活移动应用到分组</tspan>
+      <tspan x="30" dy="24">• 支持位置精确控制</tspan>
+      <tspan x="30" dy="24">• 快速搜索应用信息</tspan>
+    </text>
+  </g>
+
+  <!-- 功能卡片 4: 数据导出 -->
+  <g transform="translate(30, 330)" filter="url(#shadow)">
+    <rect width="360" height="220" rx="16" fill="url(#card4)"/>
+    <g transform="translate(30, 30)">
+      <rect x="0" y="0" width="60" height="60" rx="12" fill="rgba(255,255,255,0.25)"/>
+      <path d="M15 30 L25 30 L25 20 L35 30 L35 30 L45 30 M30 20 L30 40" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <line x1="12" y1="48" x2="48" y2="48" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <text x="105" y="55" font-family="'SF Pro Display', sans-serif" font-size="22" font-weight="600" fill="#ffffff">数据导出</text>
+    <text x="30" y="100" font-family="'SF Pro Text', sans-serif" font-size="15" fill="rgba(255,255,255,0.9)">
+      <tspan x="30" dy="0">• 导出 CSV/JSON 格式</tspan>
+      <tspan x="30" dy="24">• 完整应用列表备份</tspan>
+      <tspan x="30" dy="24">• 支持自定义输出路径</tspan>
+    </text>
+  </g>
+
+  <!-- 功能卡片 5: 数据统计 -->
+  <g transform="translate(420, 330)" filter="url(#shadow)">
+    <rect width="360" height="220" rx="16" fill="url(#card5)"/>
+    <g transform="translate(30, 30)">
+      <rect x="0" y="0" width="60" height="60" rx="12" fill="rgba(255,255,255,0.25)"/>
+      <rect x="10" y="35" width="8" height="15" fill="#fff"/>
+      <rect x="22" y="25" width="8" height="25" fill="#fff"/>
+      <rect x="34" y="20" width="8" height="30" fill="#fff"/>
+      <rect x="46" y="30" width="8" height="20" fill="#fff"/>
+    </g>
+    <text x="105" y="55" font-family="'SF Pro Display', sans-serif" font-size="22" font-weight="600" fill="#ffffff">数据统计</text>
+    <text x="30" y="100" font-family="'SF Pro Text', sans-serif" font-size="15" fill="rgba(255,255,255,0.9)">
+      <tspan x="30" dy="0">• 数据库一致性检查</tspan>
+      <tspan x="30" dy="24">• 检测未归组应用</tspan>
+      <tspan x="30" dy="24">• 分组应用数量统计</tspan>
+    </text>
+  </g>
+
+  <!-- 功能卡片 6: 树形视图 -->
+  <g transform="translate(810, 330)" filter="url(#shadow)">
+    <rect width="360" height="220" rx="16" fill="url(#card6)"/>
+    <g transform="translate(30, 30)">
+      <rect x="0" y="0" width="60" height="60" rx="12" fill="rgba(255,255,255,0.3)"/>
+      <line x1="15" y1="30" x2="25" y2="30" stroke="#667eea" stroke-width="2"/>
+      <line x1="25" y1="20" x2="35" y2="20" stroke="#667eea" stroke-width="2"/>
+      <line x1="25" y1="40" x2="35" y2="40" stroke="#667eea" stroke-width="2"/>
+      <line x1="35" y1="15" x2="45" y2="15" stroke="#667eea" stroke-width="2"/>
+      <line x1="35" y1="25" x2="45" y2="25" stroke="#667eea" stroke-width="2"/>
+      <line x1="35" y1="35" x2="45" y2="35" stroke="#667eea" stroke-width="2"/>
+      <line x1="35" y1="45" x2="45" y2="45" stroke="#667eea" stroke-width="2"/>
+      <circle cx="15" cy="30" r="3" fill="#667eea"/>
+      <circle cx="25" cy="20" r="3" fill="#667eea"/>
+      <circle cx="25" cy="40" r="3" fill="#667eea"/>
+      <circle cx="45" cy="15" r="3" fill="#667eea"/>
+      <circle cx="45" cy="25" r="3" fill="#667eea"/>
+      <circle cx="45" cy="35" r="3" fill="#667eea"/>
+      <circle cx="45" cy="45" r="3" fill="#667eea"/>
+    </g>
+    <text x="105" y="55" font-family="'SF Pro Display', sans-serif" font-size="22" font-weight="600" fill="#ffffff">树形视图</text>
+    <text x="30" y="100" font-family="'SF Pro Text', sans-serif" font-size="15" fill="#e6edf3">
+      <tspan x="30" dy="0">• 可视化层级结构</tspan>
+      <tspan x="30" dy="24">• 支持树形/JSON 格式</tspan>
+      <tspan x="30" dy="24">• 快速定位应用位置</tspan>
+    </text>
+  </g>
+</svg>
