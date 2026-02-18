@@ -66,6 +66,26 @@ python3 ~/.claude/skills/program-appgrid/scripts/create_group.py --db ~/path/to/
 
 ---
 
+## 效果展示
+
+### 整理前 - 应用散落在多个页面
+
+| | |
+|---|---|
+| ![整理前1](./assets/整理前1.jpg) | ![整理前2](./assets/整理前2.jpg) |
+
+### 整理中 - Claude Code 自动执行分组和移动
+
+| | |
+|---|---|
+| ![整理中1](./assets/整理中1.jpg) | ![整理中2](./assets/整理中2.jpg) |
+
+### 整理后 - 所有应用整齐归入分组
+
+![整理后](./assets/整理后.jpg)
+
+---
+
 ## 配置说明
 
 无需配置文件。使用 `--db` 参数指定 `.agrid` 数据库路径即可。

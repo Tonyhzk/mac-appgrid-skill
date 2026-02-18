@@ -66,6 +66,26 @@ python3 ~/.claude/skills/program-appgrid/scripts/create_group.py --db ~/path/to/
 
 ---
 
+## Screenshots
+
+### Before - Apps scattered across pages
+
+| | |
+|---|---|
+| ![Before 1](./assets/整理前1.jpg) | ![Before 2](./assets/整理前2.jpg) |
+
+### In Progress - Claude Code organizing apps
+
+| | |
+|---|---|
+| ![Progress 1](./assets/整理中1.jpg) | ![Progress 2](./assets/整理中2.jpg) |
+
+### After - All apps neatly grouped
+
+![After](./assets/整理后.jpg)
+
+---
+
 ## Configuration
 
 No configuration required. Specify the `.agrid` database path with the `--db` parameter when running scripts.
