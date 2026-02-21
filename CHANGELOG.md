@@ -6,6 +6,22 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.1.0] - 2026-02-21
+
+### Added
+- Group pagination support: groups can now contain multiple pages (type=3 containers), each holding up to 35 apps
+- `core.py`: added `get_group_containers()` and `find_available_container()` functions
+- `resolve_target()` now auto-selects an available page or creates a new one when all pages are full
+- `list_tree.py`: displays sub-pages within groups when multiple pages exist
+- `stats.py`: shows page count for multi-page groups
+- `check_integrity.py`: detects empty sub-pages within groups
+
+### Changed
+- `delete_group.py`: handles all sub-pages when deleting a group
+- `export.py`: collects apps from all sub-pages within a group
+
+---
+
 ## [1.0.1] - 2026-02-18
 
 ### Added

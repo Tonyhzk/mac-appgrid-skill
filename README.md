@@ -17,6 +17,7 @@ A Claude Code skill for managing AppGrid database on macOS.
 - **Search Apps** - Find apps by name or bundle ID
 - **Group Management** - Create, rename, delete, and move groups
 - **Move Apps** - Move apps between pages and groups
+- **Group Pagination** - Groups auto-paginate when exceeding 35 apps per page
 - **Export Data** - Export app list to CSV or JSON
 
 ### Diagnostic Tools

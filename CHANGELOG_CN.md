@@ -6,6 +6,22 @@
 
 ---
 
+## [1.1.0] - 2026-02-21
+
+### 新增
+- 分组内分页支持：分组可包含多个分页（type=3 容器），每页最多容纳 35 个应用
+- `core.py` 新增 `get_group_containers()` 和 `find_available_container()` 函数
+- `resolve_target()` 自动选择有空位的分页，所有分页满时自动创建新分页
+- `list_tree.py` 多分页分组显示子分页结构
+- `stats.py` 多分页分组显示页数
+- `check_integrity.py` 检测分组内的空分页
+
+### 变更
+- `delete_group.py` 删除分组时处理所有分页内的应用
+- `export.py` 导出时收集分组所有分页的应用
+
+---
+
 ## [1.0.1] - 2026-02-18
 
 ### 新增

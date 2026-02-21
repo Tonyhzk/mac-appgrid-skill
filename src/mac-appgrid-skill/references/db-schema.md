@@ -47,13 +47,17 @@
     ├── 页面1 (type=3, parent_id=1, ordering=0)
     │   ├── 应用A (type=4, parent_id=页面1)
     │   ├── 分组X (type=2, parent_id=页面1)
-    │   │   └── 分组容器 (type=3, parent_id=分组X)
-    │   │       ├── 应用B (type=4)
-    │   │       └── 应用C (type=4)
-    │   └── 应用D (type=4, parent_id=页面1)
+    │   │   ├── 分页1 (type=3, parent_id=分组X, ordering=0)
+    │   │   │   ├── 应用B (type=4)
+    │   │   │   └── 应用C (type=4)  ← 最多35个
+    │   │   └── 分页2 (type=3, parent_id=分组X, ordering=1)
+    │   │       └── 应用D (type=4)  ← 溢出到第二页
+    │   └── 应用E (type=4, parent_id=页面1)
     └── 页面2 (type=3, parent_id=1, ordering=1)
         └── ...
 ```
+
+**分组内分页机制**：一个分组(type=2)下可以有多个容器(type=3)作为分页，每页最多35个子项。当第一页满时，自动创建新分页容纳更多应用。
 
 ## 索引
 - `items_uuid_index` ON items(uuid)

@@ -5,7 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from core import (
-    connect, get_group_container, get_next_ordering, reorder_children,
+    connect, get_group_containers, get_next_ordering, reorder_children,
     TYPE_GROUP, TYPE_APP,
 )
 
@@ -28,16 +28,16 @@ def main():
         sys.exit(1)
 
     page_id = group["parent_id"]
-    container_id = get_group_container(conn, args.group)
+    containers = get_group_containers(conn, args.group)
 
-    # 将组内应用移回父页面
+    # 将所有分页内的应用移回父页面
     moved = 0
-    if container_id:
+    next_ord = get_next_ordering(conn, page_id)
+    for container_id in containers:
         apps = conn.execute(
             "SELECT rowid FROM items WHERE parent_id=? AND type=? ORDER BY ordering",
             (container_id, TYPE_APP),
         ).fetchall()
-        next_ord = get_next_ordering(conn, page_id)
         for app in apps:
             conn.execute(
                 "UPDATE items SET parent_id=?, ordering=? WHERE rowid=?",
@@ -45,7 +45,6 @@ def main():
             )
             next_ord += 1
             moved += 1
-
         # 删除容器
         conn.execute("DELETE FROM items WHERE rowid=?", (container_id,))
 

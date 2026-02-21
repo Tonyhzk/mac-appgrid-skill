@@ -45,23 +45,42 @@ def main():
         if not container:
             issues.append(f"分组 [{g['rowid']}] {g['title']} 缺少内部容器")
 
-    # 4. 空分组（容器内无应用）
+    # 4. 空分组（所有容器内均无应用）
     empty_groups = []
     for g in groups:
-        container = conn.execute(
+        containers = conn.execute(
             "SELECT rowid FROM items WHERE type=? AND parent_id=?", (TYPE_CONTAINER, g["rowid"])
-        ).fetchone()
-        if container:
-            count = conn.execute(
-                "SELECT COUNT(*) FROM items WHERE parent_id=?", (container["rowid"],)
-            ).fetchone()[0]
-            if count == 0:
+        ).fetchall()
+        if containers:
+            total_count = sum(
+                conn.execute("SELECT COUNT(*) FROM items WHERE parent_id=?", (c["rowid"],)).fetchone()[0]
+                for c in containers
+            )
+            if total_count == 0:
                 empty_groups.append(f"  📁 [{g['rowid']}] {g['title']}")
     if empty_groups:
         issues.append(f"空分组: {len(empty_groups)} 个")
         issues.extend(empty_groups)
 
-    # 5. 孤立页面（无子项的页面）
+    # 5. 空分页（分组内某个容器为空，但分组本身不为空）
+    empty_group_pages = []
+    for g in groups:
+        containers = conn.execute(
+            "SELECT rowid FROM items WHERE type=? AND parent_id=? ORDER BY ordering",
+            (TYPE_CONTAINER, g["rowid"])
+        ).fetchall()
+        if len(containers) > 1:
+            for ci, c in enumerate(containers):
+                count = conn.execute(
+                    "SELECT COUNT(*) FROM items WHERE parent_id=?", (c["rowid"],)
+                ).fetchone()[0]
+                if count == 0:
+                    empty_group_pages.append(f"  📁 [{g['rowid']}] {g['title']} 分页{ci+1} (容器{c['rowid']})")
+    if empty_group_pages:
+        issues.append(f"空分页: {len(empty_group_pages)} 个")
+        issues.extend(empty_group_pages)
+
+    # 6. 孤立页面（无子项的顶层页面）
     pages = conn.execute(
         """SELECT i.rowid FROM items i WHERE i.type=? AND i.parent_id IN
            (SELECT rowid FROM items WHERE type=? AND parent_id=0)""",
@@ -75,7 +94,7 @@ def main():
     if empty_pages:
         issues.append(f"空页面: {len(empty_pages)} 个 (IDs: {empty_pages})")
 
-    # 6. bookmark 缺失统计
+    # 7. bookmark 缺失统计
     no_bookmark = conn.execute(
         "SELECT COUNT(*) FROM apps WHERE bookmark IS NULL OR LENGTH(bookmark) = 0"
     ).fetchone()[0]

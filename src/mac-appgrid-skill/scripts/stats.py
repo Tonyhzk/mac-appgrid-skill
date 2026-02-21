@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from core import connect, get_pages, get_group_container, TYPE_GROUP, TYPE_CONTAINER, TYPE_APP
+from core import connect, get_pages, get_group_containers, TYPE_GROUP, TYPE_CONTAINER, TYPE_APP
 
 
 def main():
@@ -56,17 +56,21 @@ def main():
     }
 
     for g in groups:
-        container = get_group_container(conn, g["rowid"])
+        containers = get_group_containers(conn, g["rowid"])
         app_count = 0
-        if container:
-            app_count = conn.execute(
-                "SELECT COUNT(*) FROM items WHERE parent_id=? AND type=?", (container, TYPE_APP)
+        for cid in containers:
+            app_count += conn.execute(
+                "SELECT COUNT(*) FROM items WHERE parent_id=? AND type=?", (cid, TYPE_APP)
             ).fetchone()[0]
-        result["groups"].append({
+        page_count = len(containers)
+        group_info = {
             "id": g["rowid"],
             "title": g["title"],
             "app_count": app_count,
-        })
+        }
+        if page_count > 1:
+            group_info["pages"] = page_count
+        result["groups"].append(group_info)
 
     if args.format == "json":
         print(json.dumps(result, ensure_ascii=False, indent=2))
@@ -74,7 +78,8 @@ def main():
         print(f"总应用: {total_apps} | 已归组: {grouped_count} | 未归组: {ungrouped_count} | 页面: {len(pages)} | 分组: {len(groups)}")
         print()
         for g in result["groups"]:
-            print(f"  📁 [{g['id']}] {g['title']}: {g['app_count']} 个应用")
+            pages_info = f" ({g['pages']}页)" if g.get("pages") else ""
+            print(f"  📁 [{g['id']}] {g['title']}: {g['app_count']} 个应用{pages_info}")
 
     conn.close()
 

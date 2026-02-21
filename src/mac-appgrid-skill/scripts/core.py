@@ -55,12 +55,37 @@ def get_children(conn: sqlite3.Connection, parent_id: int) -> list[dict]:
 
 
 def get_group_container(conn: sqlite3.Connection, group_id: int) -> int | None:
-    """获取分组内部容器的 rowid"""
+    """获取分组第一个内部容器的 rowid（向后兼容）"""
     row = conn.execute(
-        "SELECT rowid FROM items WHERE type=? AND parent_id=?",
+        "SELECT rowid FROM items WHERE type=? AND parent_id=? ORDER BY ordering",
         (TYPE_CONTAINER, group_id),
     ).fetchone()
     return row["rowid"] if row else None
+
+
+def get_group_containers(conn: sqlite3.Connection, group_id: int) -> list[int]:
+    """获取分组所有内部容器（分页）的 rowid 列表，按 ordering 排序"""
+    rows = conn.execute(
+        "SELECT rowid FROM items WHERE type=? AND parent_id=? ORDER BY ordering",
+        (TYPE_CONTAINER, group_id),
+    ).fetchall()
+    return [r["rowid"] for r in rows]
+
+
+def find_available_container(conn: sqlite3.Connection, group_id: int, auto_create: bool = True) -> int:
+    """在分组中找到有空位的容器，如果都满了且 auto_create=True 则自动创建新分页"""
+    containers = get_group_containers(conn, group_id)
+    if not containers:
+        raise ValueError(f"分组 {group_id} 缺少内部容器")
+    for cid in containers:
+        if count_children(conn, cid) < MAX_ITEMS_PER_CONTAINER:
+            return cid
+    if not auto_create:
+        raise ValueError(f"分组 {group_id} 所有分页已满（共 {len(containers)} 页）")
+    # 自动创建新分页
+    next_ord = get_next_ordering(conn, group_id)
+    new_container = insert_item(conn, TYPE_CONTAINER, group_id, next_ord)
+    return new_container
 
 
 def get_next_ordering(conn: sqlite3.Connection, parent_id: int) -> int:
@@ -99,15 +124,12 @@ def reorder_children(conn: sqlite3.Connection, parent_id: int):
 
 
 def resolve_target(conn: sqlite3.Connection, target_id: int) -> int:
-    """解析移动目标：如果是分组则返回其内部容器 ID，否则原样返回"""
+    """解析移动目标：如果是分组则返回有空位的容器 ID（满了自动新建分页），否则原样返回"""
     row = conn.execute("SELECT type FROM items WHERE rowid=?", (target_id,)).fetchone()
     if not row:
         raise ValueError(f"目标 ID {target_id} 不存在")
     if row["type"] == TYPE_GROUP:
-        container = get_group_container(conn, target_id)
-        if not container:
-            raise ValueError(f"分组 {target_id} 缺少内部容器")
-        return container
+        return find_available_container(conn, target_id)
     return target_id
 
 

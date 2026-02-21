@@ -7,7 +7,7 @@ from io import StringIO
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from core import connect, get_pages, get_group_container, TYPE_GROUP, TYPE_APP
+from core import connect, get_pages, get_group_containers, TYPE_GROUP, TYPE_APP
 
 
 def collect_apps(conn, parent_id, page_name, group_name=""):
@@ -33,10 +33,10 @@ def collect_apps(conn, parent_id, page_name, group_name=""):
                 "group": group_name,
             })
         elif row["type"] == TYPE_GROUP:
-            container = get_group_container(conn, row["rowid"])
-            if container:
+            containers = get_group_containers(conn, row["rowid"])
+            for cid in containers:
                 results.extend(
-                    collect_apps(conn, container, page_name, row["group_title"] or "")
+                    collect_apps(conn, cid, page_name, row["group_title"] or "")
                 )
     return results
 

@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from core import connect, get_pages, get_children, get_group_container, TYPE_GROUP, TYPE_APP, TYPE_CONTAINER
+from core import connect, get_pages, get_children, get_group_containers, TYPE_GROUP, TYPE_APP, TYPE_CONTAINER
 
 
 def build_tree(conn, parent_id, depth=0):
@@ -23,9 +23,22 @@ def build_tree(conn, parent_id, depth=0):
             node["bundleid"] = child["bundleid"] or ""
         elif child["type"] == TYPE_GROUP:
             node["title"] = child["group_title"] or ""
-            container = get_group_container(conn, child["rowid"])
-            if container:
-                node["children"] = build_tree(conn, container, depth + 1)
+            containers = get_group_containers(conn, child["rowid"])
+            all_children = []
+            for ci, cid in enumerate(containers):
+                page_children = build_tree(conn, cid, depth + 1)
+                if len(containers) > 1:
+                    # 多分页时包装为分页节点
+                    all_children.append({
+                        "id": cid,
+                        "type": TYPE_CONTAINER,
+                        "ordering": ci,
+                        "title": f"分页 {ci + 1}",
+                        "children": page_children,
+                    })
+                else:
+                    all_children.extend(page_children)
+            node["children"] = all_children
         elif child["type"] == TYPE_CONTAINER:
             node["children"] = build_tree(conn, child["rowid"], depth + 1)
         result.append(node)
